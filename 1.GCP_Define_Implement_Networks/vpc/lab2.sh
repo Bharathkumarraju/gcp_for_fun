@@ -147,3 +147,71 @@ student_02_b523ad7a5612@cloudshell:~ (qwiklabs-gcp-01-22d3600635fa)$
 
 
 
+student-02-b523ad7a5612@vm-appliance:~$ sudo ifconfig
+ens4: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1460
+        inet 172.16.0.3  netmask 255.255.255.255  broadcast 172.16.0.3
+        inet6 fe80::4001:acff:fe10:3  prefixlen 64  scopeid 0x20<link>
+        ether 42:01:ac:10:00:03  txqueuelen 1000  (Ethernet)
+        RX packets 802  bytes 188044 (183.6 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 749  bytes 82333 (80.4 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+ens5: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1460
+        inet 10.130.0.3  netmask 255.255.255.255  broadcast 10.130.0.3
+        inet6 fe80::4001:aff:fe82:3  prefixlen 64  scopeid 0x20<link>
+        ether 42:01:0a:82:00:03  txqueuelen 1000  (Ethernet)
+        RX packets 4  bytes 2308 (2.2 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 16  bytes 2304 (2.2 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+ens6: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1460
+        inet 10.128.0.3  netmask 255.255.255.255  broadcast 10.128.0.3
+        inet6 fe80::4001:aff:fe80:3  prefixlen 64  scopeid 0x20<link>
+        ether 42:01:0a:80:00:03  txqueuelen 1000  (Ethernet)
+        RX packets 6  bytes 2420 (2.3 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 16  bytes 2310 (2.2 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 36  bytes 5796 (5.6 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 36  bytes 5796 (5.6 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+student-02-b523ad7a5612@vm-appliance:~$
+
+
+
+You can ping privatenet-us-vm by its name because VPC networks have an internal DNS service that allows you to address instances by their DNS names instead of their internal IP addresses.
+When an internal DNS query is made with the instance hostname, it resolves to the primary interface (nic0) of the instance. Therefore, this only works for privatenet-us-vm in this case.
+
+
+student-02-b523ad7a5612@vm-appliance:~$ ip route
+default via 172.16.0.1 dev ens4
+10.128.0.0/20 via 10.128.0.1 dev ens6
+10.128.0.1 dev ens6 scope link
+10.130.0.0/20 via 10.130.0.1 dev ens5
+10.130.0.1 dev ens5 scope link
+172.16.0.0/24 via 172.16.0.1 dev ens4
+172.16.0.1 dev ens4 scope link
+student-02-b523ad7a5612@vm-appliance:~$
+
+
+
+The primary interface eth0 gets the default route (default via 172.16.0.1 dev eth0),
+and all three interfaces, eth0, eth1, and eth2, get routes for their respective subnets.
+ Because the subnet of mynet-eu-vm (10.132.0.0/20) is not included in this routing table,
+the ping to that instance leaves vm-appliance on eth0 (which is on a different VPC network).
+You could change this behavior by configuring policy routing as documented https://cloud.google.com/vpc/docs/create-use-multiple-interfaces#configuring_policy_routing
+
+
+
+
+
+
