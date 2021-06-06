@@ -97,3 +97,53 @@ privatesubnet-us     us-central1              privatenet     172.16.0.0/24
 privatesubnet-eu     europe-west3             privatenet     172.20.0.0/20
 student_02_b523ad7a5612@cloudshell:~ (qwiklabs-gcp-01-22d3600635fa)$
 
+
+
+gcloud compute --project=qwiklabs-gcp-01-22d3600635fa firewall-rules create managementnet-allow-icmp-ssh-rdp --direction=INGRESS --priority=1000 --network=managementnet --action=ALLOW --rules=tcp:22,tcp:3389,icmp --source-ranges=0.0.0.0/0
+
+
+student_02_b523ad7a5612@cloudshell:~ (qwiklabs-gcp-01-22d3600635fa)$ gcloud compute firewall-rules create privatenet-allow-icmp-ssh-rdp --direction=INGRESS --priority=1000 --network=privatenet --action=ALLOW --rules=icmp,tcp:22,tcp:3389 --source-ranges=0.0.0.0/0
+Creating firewall...⠹Created [https://www.googleapis.com/compute/v1/projects/qwiklabs-gcp-01-22d3600635fa/global/firewalls/privatenet-allow-icmp-ssh-rdp].
+Creating firewall...done.
+NAME                           NETWORK     DIRECTION  PRIORITY  ALLOW                 DENY  DISABLED
+privatenet-allow-icmp-ssh-rdp  privatenet  INGRESS    1000      icmp,tcp:22,tcp:3389        False
+student_02_b523ad7a5612@cloudshell:~ (qwiklabs-gcp-01-22d3600635fa)$
+
+
+
+student_02_b523ad7a5612@cloudshell:~ (qwiklabs-gcp-01-22d3600635fa)$ gcloud compute firewall-rules list --sort-by=NETWORK
+NAME                              NETWORK        DIRECTION  PRIORITY  ALLOW                         DENY  DISABLED
+default-allow-icmp                default        INGRESS    65534     icmp                                False
+default-allow-internal            default        INGRESS    65534     tcp:0-65535,udp:0-65535,icmp        False
+default-allow-rdp                 default        INGRESS    65534     tcp:3389                            False
+default-allow-ssh                 default        INGRESS    65534     tcp:22                              False
+managementnet-allow-icmp-ssh-rdp  managementnet  INGRESS    1000      tcp:22,tcp:3389,icmp                False
+mynetwork-allow-icmp              mynetwork      INGRESS    1000      icmp                                False
+mynetwork-allow-rdp               mynetwork      INGRESS    1000      tcp:3389                            False
+mynetwork-allow-ssh               mynetwork      INGRESS    1000      tcp:22                              False
+privatenet-allow-icmp-ssh-rdp     privatenet     INGRESS    1000      icmp,tcp:22,tcp:3389                False
+
+To show all fields of the firewall, please show in JSON format: --format=json
+To show all fields in table format, please see the examples in --help.
+
+student_02_b523ad7a5612@cloudshell:~ (qwiklabs-gcp-01-22d3600635fa)$
+
+
+
+
+student_02_b523ad7a5612@cloudshell:~ (qwiklabs-gcp-01-22d3600635fa)$ gcloud compute instances create privatenet-us-vm --zone=us-central1-c --machine-type=n1-standard-1 --subnet=privatesubnet-us
+Created [https://www.googleapis.com/compute/v1/projects/qwiklabs-gcp-01-22d3600635fa/zones/us-central1-c/instances/privatenet-us-vm].
+NAME              ZONE           MACHINE_TYPE   PREEMPTIBLE  INTERNAL_IP  EXTERNAL_IP     STATUS
+privatenet-us-vm  us-central1-c  n1-standard-1               172.16.0.2   35.202.223.240  RUNNING
+student_02_b523ad7a5612@cloudshell:~ (qwiklabs-gcp-01-22d3600635fa)$ gcloud compute instances list --sort-by=ZONE
+NAME                 ZONE            MACHINE_TYPE   PREEMPTIBLE  INTERNAL_IP  EXTERNAL_IP     STATUS
+mynet-eu-vm          europe-west2-a  n1-standard-1               10.154.0.2   34.105.145.58   RUNNING
+managementnet-us-vm  us-central1-c   n1-standard-1               10.130.0.2   34.70.242.190   RUNNING
+mynet-us-vm          us-central1-c   n1-standard-1               10.128.0.2   34.66.32.176    RUNNING
+privatenet-us-vm     us-central1-c   n1-standard-1               172.16.0.2   35.202.223.240  RUNNING
+student_02_b523ad7a5612@cloudshell:~ (qwiklabs-gcp-01-22d3600635fa)$
+
+
+
+
+
