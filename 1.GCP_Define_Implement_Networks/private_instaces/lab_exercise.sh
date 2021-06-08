@@ -260,3 +260,8 @@ they cannot initiate their own, new connections to your instances via NAT.
 
 
 
+Private connections are a one-to-one relationship between your VPC network and a service producer and connect to a Private Service Connect endpoint in your VPC network,
+which forwards requests to Google APIs and services.
+
+Without external IP address assigned must be connected to a subnet with Private Google Access enabled.
+
