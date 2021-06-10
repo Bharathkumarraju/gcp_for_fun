@@ -1,0 +1,12 @@
+kind: Service
+spec:
+  selector:
+    app: my-app
+    version: v1
+
+---
+
+kubectl apply -f my-app-v2.yaml
+
+kubectl patch service my-app-service -p \
+{"spec":{"selector":{"version":"v2"}}}
