@@ -1,0 +1,14 @@
+kind: service
+spec:
+  selector:
+    app: my-app
+
+
+kubectl apply -f my-app-v2.yaml
+kubectl scale deploy/my-app-v2 --replicas=10
+kubectl delete -f my-app-v1.yaml
+
+
+kubectl rollout undo deployment nginx-deployment
+kubectl rollout undo deployment nginx-deployment --to-revision=2
+kubectl rollout history deployment nginx-deployment --revision=2
