@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: service
+metadata:
+  name: my-service
+spec:
+  type: clusterIP
+  selector:
+    app: Backend
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 6000
+
