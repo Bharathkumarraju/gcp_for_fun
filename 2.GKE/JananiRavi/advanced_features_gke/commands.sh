@@ -241,7 +241,7 @@ exit
 gcloud container clusters delete spikey-cluster \
  --zone us-central1-a
 
-
+===================================================================================================================================
 >>>>> Moule 2 Demo 2
 # Understanding private clusters and internal load balancing
 
@@ -253,9 +253,10 @@ export PS1="\[\e[34m\]\w\[\e[m\]>\n-->"
 gcloud config set compute/zone us-central1-a
 
 gcloud beta container clusters create spikey-website-cluster \
- --private-cluster \
+ --enable-private-nodes \
  --master-ipv4-cidr 172.16.0.16/28 \
  --enable-ip-alias \
+ --zone us-central1-a \
  --create-subnetwork "" 
 
 gcloud compute instances create content-team-instance \
