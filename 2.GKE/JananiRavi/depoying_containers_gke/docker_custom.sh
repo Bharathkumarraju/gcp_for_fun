@@ -172,4 +172,17 @@ Events:
 bharath@cloudshell:~/spikey-website (learngcp-316009)$
 
 
+bharath@cloudshell:~/spikey-wordpress (learngcp-316009)$ kubectl apply -f mysql-volumeclaim.yaml
+persistentvolumeclaim/spikey-mysql-volumeclaim created
+bharath@cloudshell:~/spikey-wordpress (learngcp-316009)$ kubectl apply -f wordpress-volumeclaim.yaml
+persistentvolumeclaim/spikey-wordpress-volumeclaim created
+bharath@cloudshell:~/spikey-wordpress (learngcp-316009)$ kubectl get pvc
+NAME                           STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+spikey-mysql-volumeclaim       Bound    pvc-3814a8c4-d98f-4c27-8c27-ce8f80e12deb   200Gi      RWO            standard       19s
+spikey-wordpress-volumeclaim   Bound    pvc-3082b8e4-9ae5-41f1-8dbf-52ce890f1f32   200Gi      RWO            standard       7s
+bharath@cloudshell:~/spikey-wordpress (learngcp-316009)$
+
+
+
+
 

@@ -1,0 +1,13 @@
+{
+  'resource': 'projects/learngcp-316009/notes/spikey-attestor-note',
+  'policy': {
+    'bindings': [
+      {
+        'role': 'roles/containeranalysis.notes.occurrences.viewer',
+        'members': [
+          'serviceAccount:service-953414004163@gcp-sa-binaryauthorization.iam.gserviceaccount.com'
+        ]
+      }
+    ]
+  }
+}
