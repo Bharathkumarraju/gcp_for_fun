@@ -1,0 +1,20 @@
+# Deploy an application to read from Cloud Pub/Sub topics
+# You create a deployment with a container that can read from Cloud Pub/Sub topics.
+# Since specific permissions are required to subscribe to, and read from,
+# Cloud Pub/Sub topics this container needs to be provided with credentials in order to successfully connect to Cloud Pub/Sub.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pubsub
+spec:
+  selector:
+    matchLabels:
+      app: pubsub
+  template:
+    metadata:
+      labels:
+        app: pubsub
+    spec:
+      containers:
+        - name: subscriber
+          image: gcr.io/google-samples/pubsub-sample:v1
