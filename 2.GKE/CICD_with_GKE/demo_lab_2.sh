@@ -153,6 +153,48 @@ student_00_46bc792a0038@cloudshell:~/hello-cloudbuild-env (qwiklabs-gcp-02-d9ddf
 
 
 
+student_00_46bc792a0038@cloudshell:~/hello-cloudbuild-env (qwiklabs-gcp-02-d9ddfe7472a6)$ PROJECT_NUMBER="$(gcloud projects describe ${PROJECT_ID} \
+>     --format='get(projectNumber)')"
+student_00_46bc792a0038@cloudshell:~/hello-cloudbuild-env (qwiklabs-gcp-02-d9ddfe7472a6)$ cat >/tmp/hello-cloudbuild-env-policy.yaml <<EOF
+> bindings:
+> - members:
+>   - serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com
+>   role: roles/source.writer
+> EOF
+student_00_46bc792a0038@cloudshell:~/hello-cloudbuild-env (qwiklabs-gcp-02-d9ddfe7472a6)$ gcloud source repos set-iam-policy \
+>     hello-cloudbuild-env /tmp/hello-cloudbuild-env-policy.yaml
+Updated IAM policy for repo [hello-cloudbuild-env].
+bindings:
+- members:
+  - serviceAccount:816948167132@cloudbuild.gserviceaccount.com
+  role: roles/source.writer
+etag: BwXEoMLVo0o=
+version: 1
+student_00_46bc792a0038@cloudshell:~/hello-cloudbuild-env (qwiklabs-gcp-02-d9ddfe7472a6)$
+student_00_46bc792a0038@cloudshell:~/hello-cloudbuild-env (qwiklabs-gcp-02-d9ddfe7472a6)$
+student_00_46bc792a0038@cloudshell:~/hello-cloudbuild-env (qwiklabs-gcp-02-d9ddfe7472a6)$ cd ~/hello-cloudbuild-app
+student_00_46bc792a0038@cloudshell:~/hello-cloudbuild-app (qwiklabs-gcp-02-d9ddfe7472a6)$ cp cloudbuild-trigger-cd.yaml cloudbuild.yaml
+student_00_46bc792a0038@cloudshell:~/hello-cloudbuild-app (qwiklabs-gcp-02-d9ddfe7472a6)$ cd ~/hello-cloudbuild-app
+student_00_46bc792a0038@cloudshell:~/hello-cloudbuild-app (qwiklabs-gcp-02-d9ddfe7472a6)$ git add cloudbuild.yaml
+student_00_46bc792a0038@cloudshell:~/hello-cloudbuild-app (qwiklabs-gcp-02-d9ddfe7472a6)$ git commit -m "Trigger CD pipeline"
+[master 43d9988] Trigger CD pipeline
+ 1 file changed, 40 insertions(+)
+student_00_46bc792a0038@cloudshell:~/hello-cloudbuild-app (qwiklabs-gcp-02-d9ddfe7472a6)$ git push google master
+
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (2/2), 236 bytes | 236.00 KiB/s, done.
+Total 2 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1)
+To https://source.developers.google.com/p/qwiklabs-gcp-02-d9ddfe7472a6/r/hello-cloudbuild-app
+   5b55cac..43d9988  master -> master
+student_00_46bc792a0038@cloudshell:~/hello-cloudbuild-app (qwiklabs-gcp-02-d9ddfe7472a6)$
+student_00_46bc792a0038@cloudshell:~/hello-cloudbuild-app (qwiklabs-gcp-02-d9ddfe7472a6)$
+
+
+
 
 
 
