@@ -19,3 +19,6 @@ Operation completed over 1 objects/15.1 KiB.
 bharath@cloudshell:~ (learngcp-316009)$
 
 
+
+
+gcloud compute instances set-service-account private-vm --zone asia-southeast1-a  --scopes 'https://www.googleapis.com/auth/cloud-platform'
