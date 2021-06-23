@@ -1,0 +1,3 @@
+name: carvedrock-training
+runtime: dotnet
+description: Infrastructure for Carved Rock's training program web app

@@ -1,0 +1,3 @@
+config:
+  gcp:credentials: ./gcp-credentials.json
+  gcp:project: ps-pulumi-getting-started
