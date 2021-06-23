@@ -1,0 +1,3 @@
+name: testbkr
+runtime: dotnet
+description: A minimal GCP C# Pulumi program
